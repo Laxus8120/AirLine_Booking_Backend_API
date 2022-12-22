@@ -22,11 +22,11 @@
 
     -/test (Later)
 
-## To save sensitive information
+## To save sensitive Variable
 
-> to save the sensitive information we use enviroment information.
+> to save the sensitive information we use enviroment variable.
 
-### what are enviroment information ?
+### what are enviroment variable?
 * It is a dynamic name value which can affect the way of running process.
 * The value of these value can change over time And we can manually change it .
 * And, you dont need to save this variable in your project, what you can do is save these variable in your enviorment.
@@ -40,4 +40,5 @@
 * we create file now we have to require it.
     - To require this we create a diff file (seprated from our index.js) in our config folder.
     - and there we export the enviroment variable.
-      
+
+> NOTE - In .env file you cannot end with anything with semicolon.
