@@ -12,8 +12,8 @@
 > Insider the `src/config` folder create a new file `config.json` and then add the following piece of json
 ```json
   "development": {
-    "username": "root",
-    "password": "Laxus8120@",
+    "username": "YOUR_DB_LOGIN_NAME",
+    "password": "YOUR_DB_PASSWORD",
     "database": "Flight_Search_DB_DEV",
     "host": "127.0.0.1",
     "dialect": "mysql"
