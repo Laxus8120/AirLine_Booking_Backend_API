@@ -92,7 +92,8 @@ or wanna remove .
 ### ----------------------------------------------------------------------------------------------------------------------------
 
 ## IMPLEMENTING TABLES 
-/Images/dm_tables
+![DB_Tables](https://user-images.githubusercontent.com/99763066/209309552-36f32ece-d2a2-442a-8647-4fefbc0cedf8.jpg)
+
 
 ## LETS START CREATING THE TABLE 
 
