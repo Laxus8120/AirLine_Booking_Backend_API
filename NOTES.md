@@ -109,10 +109,37 @@ or wanna remove .
 * So , we have to sync to see the tables, 
     `npx sequelizq db:migrate ` What is db:migrate ? ==> It migrate your Db , whatever new migration are there  which might not be applied yet will be applied .
 * Now , it sync the new migration , now if we do `show tables` it contain the tables we created and a new table which is `sequqlize_meta data ` .
-* And this metadata contain all the migration we done in our database.       
-< NOTE `Naming CONVENTION ` -   * Table name has to be plural 
+* And this metadata contain all the migration we done in our database. 
+
+> NOTE `Naming CONVENTION ` -   * Table name has to be plural 
                                 * Model class have to singular name 
-                                *  
+                                 
 
 > NOTE - IN SEQULIZE CLI every table have attribute like created_AT and updated_AT , ID  coloums by default in every table.
+> NOTE - sequelize-cli helps us to make models , migration and many more things automatically or else you have to do on your own.
+
+> *** NOTE - What ever you make changes is migration file it is actually in the table level and when you are interacting with your table with javascript file(city.js model ) then you dont have to care about it .***
+
+### ------------------------------------------------------------------------------------------------------------------------------
+
+### HOW TO INTERAct WITH THE MODEL  ?
+
+> NOTE - TECHNICALLY ALL THE INTERACTION WITH MODEL SHOULD BE HAPPEN FROM THE REPOSITORY LAYER.
+
+> *** SO WE WRITE THE REPOSITORY CLASS ***
+
+*** _STEPS_ ***
+
+* we create a city-Repository.js in our repo folder.
+*NOW, in order to city-repo work properly we need to have access to the model because every model have these function e.x - User.Create().
+*So, we require the model - ` const City  = require('/model/index.js') `
+> We are requiring the index.js because the index.js file is going to return all the model we are going to put in our Models package.
+
+> *** NOTE - The right way to interact with the model is in the repository, So in the repository we write the code that should help us actually to create the  city , update the city all of these things ***
+
+### ----------------------------------------------------------------------------------------------------------------------------
+
+### SO LETS START WRITING OUR REPOSITORY FOLDER
+
+> In the repository we are going to write all of the code which actually going to interact with the models.
 
