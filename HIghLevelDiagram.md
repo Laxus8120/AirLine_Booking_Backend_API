@@ -24,9 +24,12 @@ The first Layer of defence we actually have is going to our `load balancer`.
 > Load balancer internally using algorithim (e.x ; round robin , FIFO).
 > So, the only work for laod balancer is actally handle which server hadles which request.
 
-![normal archi](C:\Users\Luffy\Desktop\AirLine_Booking_Backend_API\Images);
+![docDesign](https://user-images.githubusercontent.com/99763066/209458842-3817b7cb-cf9f-40d1-848d-937e7222a62a.jpg)
 
-`***Note - The thing is this type of archi generally shown that load balancer directly route the req to the app.. server, but in real life there is so many things r ***.
+
+`***Note - The thing is this type of archi generally shown that load balancer directly route the req to the app.. server, but in real life there is so many things really happeing, show in below fig:- ***.
+
+![highlevelDesign](https://user-images.githubusercontent.com/99763066/209458855-da8ae201-c78e-433f-998d-280ede8fa85d.jpg)
 
 ###
 ` we know we have to two type of architectue 1. MONOLIGTH, 2. MICROSERVICES`
