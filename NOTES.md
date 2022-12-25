@@ -106,7 +106,8 @@ or wanna remove .
 * After running upper command a new model name `city.js` will be created in our models folder.
 * In this city.js file we have our city class .(NOTE - if you dont use sequelilze-cli you have to create this class manually . So, this is the advantage of using sequelize-CLi).
 * THE upper commmand also did one more things - it created a migration file , and this migration folder have our default  coloumn like ID , Updated_AT , Created AT and also it constain the more attribute like it cannot be null . 
-* So , we have to sync to see the tables, 
+* If we try to see the data we cannot see it because ?
+*we have to sync to see the tables, 
     `npx sequelizq db:migrate ` What is db:migrate ? ==> It migrate your Db , whatever new migration are there  which might not be applied yet will be applied .
 * Now , it sync the new migration , now if we do `show tables` it contain the tables we created and a new table which is `sequqlize_meta data ` .
 * And this metadata contain all the migration we done in our database. 
@@ -114,11 +115,11 @@ or wanna remove .
 > NOTE `Naming CONVENTION ` -   * Table name has to be plural 
                                 * Model class have to singular name 
                                  
-
+*** _Advantage of Using sequelize-Cli_ ***
 > NOTE - IN SEQULIZE CLI every table have attribute like created_AT and updated_AT , ID  coloums by default in every table.
 > NOTE - sequelize-cli helps us to make models , migration and many more things automatically or else you have to do on your own.
 
-> *** NOTE - What ever you make changes is migration file it is actually in the table level and when you are interacting with your table with javascript file(city.js model ) then you dont have to care about it .***
+> *** NOTE - What ever you make changes is migration file it is actually in the table level and when you are interacting with your table with javascript file(city.js model) then you dont have to care about it .***
 
 ### ------------------------------------------------------------------------------------------------------------------------------
 
@@ -142,4 +143,9 @@ or wanna remove .
 ### SO LETS START WRITING OUR REPOSITORY FOLDER
 
 > In the repository we are going to write all of the code which actually going to interact with the models.
+> _NOTE - REPOSITORY Layer is also responsible for communicating with any data source this data source can be your DB or we are fetching data from somewhere else , we are going to fetch it from repository layer._
+>For.ex - create city , deleteCity.
+## -------------------------------------------------------------------------------------------------------------------------------
+
+# Now we will be using this city repo in order to actually implement an APi using with which we will create city in our database. 
 
