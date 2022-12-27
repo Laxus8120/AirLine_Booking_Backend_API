@@ -162,5 +162,11 @@ or wanna remove .
 
 > Here we make a city repo object or key(this.cityRepository = new CityRepository())
 
+* Now, we have cityService in place, this service technically call from controller(right now we dont have multiple service with us but there will be so we can do the same we create a new file index.js and try to export every service as a object and then we  can import this index.js file anywhere).
+
+### now create our first controller (city_controller.js)
+* Here we creating our different controller (create, update , destroy , get)
+> * we are requiring cityService, in order to use cityService we need to create the cityservice object.
+ we create a global cityService Object ` const cityService  = new CityService()` i now we can use this everywhere 
 # Now we will be using this city repo in order to actually implement an APi using with which we will create city in our database. 
 
