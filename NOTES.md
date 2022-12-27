@@ -145,7 +145,22 @@ or wanna remove .
 > In the repository we are going to write all of the code which actually going to interact with the models.
 > _NOTE - REPOSITORY Layer is also responsible for communicating with any data source this data source can be your DB or we are fetching data from somewhere else , we are going to fetch it from repository layer._
 >For.ex - create city , deleteCity.
+
+< NOTE - if you want to update at a table level then it is better to create a migration >
 ## -------------------------------------------------------------------------------------------------------------------------------
+
+> NOTE - TO make code clean try to write all the reuire module in one obejct  like we did in `/repository/index.js` and then you can require it by destructured the object .
+
+< NOw lets wrting our city-service layer 
+``` class cityService {
+    constructor(){
+
+    }
+}
+```
+>
+
+> Here we make a city repo object or key(this.cityRepository = new CityRepository())
 
 # Now we will be using this city repo in order to actually implement an APi using with which we will create city in our database. 
 
