@@ -166,7 +166,35 @@ or wanna remove .
 
 ### now create our first controller (city_controller.js)
 * Here we creating our different controller (create, update , destroy , get)
-> * we are requiring cityService, in order to use cityService we need to create the cityservice object.
- we create a global cityService Object ` const cityService  = new CityService()` i now we can use this everywhere 
+* we are requiring cityService.
+* In order to use cityService we need to create the cityservice object.
+we create a global cityService Object ` const cityService  = new CityService()` i now we can use this everywhere.
+
+### AFTER Completing our controllers now move on to ROUTES.
+
+### HERE we are going to use express Router.
+### WHAT IS EXPRESS ROUTER
+> It is a powerfullway in order to write the clean code .
+>Use the `exprss.Router` class to create a `modular`(Seprate things at seprate places wherever it concerns), mountable route handler.
+> Using this we can reduse the way of writing the redundant piece of code again and again.
+> // img/module.exports
+
+### CREATING ROUTE FOLDER
+> CREATING new file index.js
+> Create a router function.
+> creating a viAPiRoute which route to the v1 folder.
+> Now, we put all our v1 Api route in this folder.(Creating a index.js file)
+> Now , we put a middleware which segregate the v1 route to the v1APiRoute folder.
+> NOW, route the v1 folder.
+> now lets require our cityController.
+> now setup the type of req(create , upadate , delete ).
+< Let's say there is just an api call how are we going to route an api call to these v1 and v2 version we made in future, how are we going to route them ? >
+> So, we are going to create a new route in our `flightAndSearchService/index.js`.
+> Creating a ApiRoutes object which route to the `const ApiRoute = Route/index.js`.
+> Now, how can we map this route object we write `app.use('/api',ApiRoutes)`, here every api req req are now map with the ApiRoutes object .
+
+
+
+
 # Now we will be using this city repo in order to actually implement an APi using with which we will create city in our database. 
 

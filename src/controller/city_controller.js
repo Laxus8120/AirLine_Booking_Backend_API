@@ -1,10 +1,10 @@
 const {CityService} = require('../services/index');
 
 const cityService  = new CityService();
-const create = async (res,req) => {               // these are our controller which consist req,res object 
-
+const create = async (req,res) => {               // these are our controller which consist req,res object 
     try {
-        const city  = await cityService.createCity(req.body());
+        const city  = await cityService.createCity(req.body);
+        console.log(city);
         return res.status(201).json({
             data : city,
             success : true,
@@ -26,7 +26,7 @@ const create = async (res,req) => {               // these are our controller wh
 const update = async (res, req) => {
 
     try {
-        const response  = await cityService.updateCity(req.params.id,req.body);
+        const response  = await cityService.updateCity(req.params.id,req.body); //we are sending the data in service layer so look the service update layer taking input
         return res.status(200).json({
             data : response,
             success : true,
