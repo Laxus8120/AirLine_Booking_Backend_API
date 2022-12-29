@@ -22,7 +22,7 @@ const create = async (req,res) => {               // these are our controller wh
 }
 
 // PATCH --> /city/:id -->req.body
-const update = async (res, req) => {
+const update = async (req,res) => {
 
     try {
         const response  = await cityService.updateCity(req.params.id,req.body); //we are sending the data in service layer so look the service update layer taking input
@@ -44,7 +44,7 @@ const update = async (res, req) => {
 }
 
 // DELETE -->/city/id  {url}
-const destroy = async (res, req) => {
+const destroy = async (req,res) => {
     
     try {
         const response  = await cityService.deleteCity(req.params.id);
@@ -67,7 +67,7 @@ const destroy = async (res, req) => {
 }
 
 // GET --> /city/:id
-const get = async (res, req) => {
+const get = async (req,res) => {
     
     try {
         const response  = await cityService.getCity(req.params.id);
