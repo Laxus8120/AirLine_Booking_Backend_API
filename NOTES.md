@@ -108,7 +108,7 @@ or wanna remove .
 * THE upper commmand also did one more things - it created a migration file , and this migration folder have our default  coloumn like ID , Updated_AT , Created AT and also it constain the more attribute like it cannot be null . 
 * If we try to see the data we cannot see it because ?
 *we have to sync to see the tables, 
-    `npx sequelizq db:migrate ` What is db:migrate ? ==> It migrate your Db , whatever new migration are there  which might not be applied yet will be applied .
+    `npx sequelize db:migrate ` What is db:migrate ? ==> It migrate your Db , whatever new migration are there  which might not be applied yet will be applied .
 * Now , it sync the new migration , now if we do `show tables` it contain the tables we created and a new table which is `sequqlize_meta data ` .
 * And this metadata contain all the migration we done in our database. 
 

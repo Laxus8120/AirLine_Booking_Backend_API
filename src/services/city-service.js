@@ -11,7 +11,7 @@ class CityService{
             const city = await this.cityRepository.createCity(data);
             return city;
         } catch (error) {
-            console.log("Something went wrong in sevice layer");
+            console.log("Something went wrong in service layer");
             throw{error};
         }
     }

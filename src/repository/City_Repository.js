@@ -1,15 +1,14 @@
-const City = require('../models/index.js');
-
+const {City} = require('../models/index.js');
 class CityRepository{
     async createCity({name}){
         try{
             const city  = await City.create({
-                name
+                name 
             });
             return city;
         }
-        catch{
-            console.log("Something went wrong in repo layer")
+        catch(error){
+            console.log("Something went wrong in repo layer");
             throw{error};
         }
     }

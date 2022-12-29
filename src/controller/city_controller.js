@@ -4,13 +4,12 @@ const cityService  = new CityService();
 const create = async (req,res) => {               // these are our controller which consist req,res object 
     try {
         const city  = await cityService.createCity(req.body);
-        console.log(city);
         return res.status(201).json({
             data : city,
             success : true,
             message : 'Successfully created a city',
             err : {} //  returning empty error object 
-        })
+        });
     } catch (error) {
         console.log(error);                     // we are not throwing error here or else we dont able to do error maping
         return res.status(500).json({
