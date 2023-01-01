@@ -52,6 +52,16 @@ class CityRepository{
             throw{error};
         }
     }
+
+    async getAllCities(){
+        try {
+            const Cities = await City.findAll();
+            return Cities;
+        } catch (error) {
+            console.log("Something went wrong in repo layer")
+            throw{error};
+        }
+    }
 }
 
 module.exports = CityRepository;

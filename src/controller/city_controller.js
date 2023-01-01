@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const {CityService} = require('../services/index');
 
 const cityService  = new CityService();
@@ -88,9 +89,30 @@ const get = async (req,res) => {
     }
 }
 
+const getAllCities = async (req,res) => {
+    try {
+        const Cities = await cityService.getAllCities();
+        return res.status(200).json({
+            data : Cities,
+            success : true,
+            message : 'Successfully fetched a cities',
+            err : {}
+        })
+    } catch (error) {
+        console.log(error);   
+        return res.status(500).json({
+            data : {},
+            success : false , 
+            message : "Not able to get a cities",
+            err : error                      
+        })    
+    }
+}
+
 module.exports= {
     create,
     update,
     destroy,
-    get
+    get,
+    getAllCities
 }
