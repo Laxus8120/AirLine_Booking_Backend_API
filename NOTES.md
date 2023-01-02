@@ -193,8 +193,64 @@ we create a global cityService Object ` const cityService  = new CityService()` 
 > Creating a ApiRoutes object which route to the `const ApiRoute = Route/index.js`.
 > Now, how can we map this route object we write `app.use('/api',ApiRoutes)`, here every api req req are now map with the ApiRoutes object .
 
+## Now , we work on Airport table 
+
+> Note - we have to create a Relationship --> City has many airports and Airports belong to a city (one to many).
+
+Steps 
+
+* Let's create a new model using sequelize 
+    `npx sequelize model:generate --name Airport --attributes name:String,addrress:String,cityId:Integer` (make sure we are in src where all our configuration are  done).
+* Now, we created a new migration file and a new model name - Airport.js
+> Note - Right now you cannot see this change in your Mysql tables.
+
+* We are putting constraints manually like `allowNull` in migration mile and model file.
+
+* Now, we need to do the Association 
+    - we need to do one to many association , we want airport belong to the city and City to have many airports.
+
+### How we can build Relationship or Association  Sequelize ?
+* Now, open city model,
+* Now, in every model file we see a `associate method` in this associate method we define our association one - to - one , one - to - many me generally mention here only .
+* In city associate method -
+    
+        ```javascript
+        this.hasMany(models.Airport, {
+            foreignKey: 'cityId',
+        })
 
 
+// here, `this` belongs to city object.
+// in `hasMany` put the model with which you have hasMany association.
+// And we have to put foreignKey .
+// We have to do one more association from `airport`
 
-# Now we will be using this city repo in order to actually implement an APi using with which we will create city in our database. 
+        ``` javascript
+        this.belongsTo(models.City, {
+        foreignKey :'cityId',
+        onDelete : 'CASCADE'
+      })
+        ```
+// here, this belongs to airport class object.
+// here , airport  `belongsTo` airport.
+// what is onDelete ? => if i delete the city from the table all the airports belong to that city also get deleted.
+so, we can put this onDelete :'CASCADE' and now if you delete the city you also delete the corresponding airports.
+// this is how we setup the assosiation.
 
+> Note - we have to make changes in migration file also,
+
+    ```javascript
+    cityId: {
+        type: Sequelize.INTEGER,
+        onDelete : 'CASCADE',
+        references : {
+          model :'Cities',
+          key : 'id',
+          as : 'cityId'
+        }
+    }
+    ```
+// we have to put refrences. that this cityId is refering as a foreign key  from a diff table.
+// Here we bind it from the city model that, `id` from the city model and that `id` act as `cityId` that we refering here.
+
+< NOTE - The Benefit of doing this association is that now the `JOINS` query are going to be so much easy >
