@@ -91,7 +91,7 @@ const get = async (req,res) => {
 
 const getAllCities = async (req,res) => {
     try {
-        const Cities = await cityService.getAllCities();
+        const Cities = await cityService.getAllCities(req.query);
         return res.status(200).json({
             data : Cities,
             success : true,
