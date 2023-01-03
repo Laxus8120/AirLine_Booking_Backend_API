@@ -253,4 +253,40 @@ so, we can put this onDelete :'CASCADE' and now if you delete the city you also 
 // we have to put refrences. that this cityId is refering as a foreign key  from a diff table.
 // Here we bind it from the city model that, `id` from the city model and that `id` act as `cityId` that we refering here.
 
-< NOTE - The Benefit of doing this association is that now the `JOINS` query are going to be so much easy >
+<NOTE - The Benefit of doing this association is that now the `JOINS` query are going to be so much easy >
+##
+
+### There is a seeder folder ?
+* seeder will help you to seed some data or put some starting data or value in your database 
+* In order to create a seeder the command we use is 
+    `npx sequelize seed:generate --name add_airports`
+* A new seeder file created in `seeder folder`
+* Writing dummy data in seeder file .
+    ```javascript
+      await queryInterface.bulkInsert('Airports',[
+    {
+      name :'Kempegowda International Airport',
+      cityId : 2,
+      createdAt : new Date(),
+      updatedAT : new Date()
+    },
+    ],{})
+    ```
+    
+    // queyInteface - this helps seeders file to communicate to mysql and execute the query 
+    // bulkInsert  - you can insert more than one data.
+
+* After writing seeder file now we need to seed them all 
+        `npx sequelize db:seed:all`
+* now what it do is , all your seeder file now start seeding.
+* Now. we do `Select * FROM AIRPORTS` we can see our dummy data
+<NOTE - So  when you are developing you dont need to setup APi every time we can use seeded data>
+
+### There something called `include query` ? to see the data with which multiple model is associated. 
+### How we can get a custom DATA ? 
+### There Something called Model synchronysation?
+
+// Custom_data_sync_modelsjs.img
+
+### Why we need sync of db ?
+<Note - Wherever we create a new model we have to do db:sync>
