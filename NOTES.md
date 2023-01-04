@@ -220,9 +220,9 @@ Steps
         })
 
 
-// here, `this` belongs to city object.
-// in `hasMany` put the model with which you have hasMany association.
-// And we have to put foreignKey .
+* here, `this` belongs to city object.
+* in `hasMany` put the model with which you have hasMany association.
+* And we have to put foreignKey .
 // We have to do one more association from `airport`
 
         ``` javascript
@@ -231,13 +231,13 @@ Steps
         onDelete : 'CASCADE'
       })
         ```
-// here, this belongs to airport class object.
-// here , airport  `belongsTo` airport.
-// what is onDelete ? => if i delete the city from the table all the airports belong to that city also get deleted.
+* here, this belongs to airport class object.
+* here , airport  `belongsTo` City.
+* what is onDelete ? => if i delete the city from the table all the airports belong to that city also get deleted.
 so, we can put this onDelete :'CASCADE' and now if you delete the city you also delete the corresponding airports.
-// this is how we setup the assosiation.
+* this is how we setup the assosiation.
 
-> Note - we have to make changes in migration file also,
+>Note - we have to make changes in migration file also,
 
     ```javascript
     cityId: {
@@ -250,10 +250,10 @@ so, we can put this onDelete :'CASCADE' and now if you delete the city you also 
         }
     }
     ```
-// we have to put refrences. that this cityId is refering as a foreign key  from a diff table.
-// Here we bind it from the city model that, `id` from the city model and that `id` act as `cityId` that we refering here.
+* we have to put refrences. that this cityId is refering as a foreign key  from a diff table.
+* Here we bind it from the city model that, `id` from the city model and that `id` act as `cityId` that we refering here.
 
-<NOTE - The Benefit of doing this association is that now the `JOINS` query are going to be so much easy >
+>NOTE - The Benefit of doing this association is that now the `JOINS` query are going to be so much easy.
 ##
 
 ### There is a seeder folder ?
@@ -280,7 +280,7 @@ so, we can put this onDelete :'CASCADE' and now if you delete the city you also 
         `npx sequelize db:seed:all`
 * now what it do is , all your seeder file now start seeding.
 * Now. we do `Select * FROM AIRPORTS` we can see our dummy data
-<NOTE - So  when you are developing you dont need to setup APi every time we can use seeded data>
+>NOTE - So  when you are developing you dont need to setup APi every time we can use seeded data
 
 ### There something called `include query` ? to see the data with which multiple model is associated. 
 ### How we can get a custom DATA ? 
@@ -289,4 +289,41 @@ so, we can put this onDelete :'CASCADE' and now if you delete the city you also 
 // Custom_data_sync_modelsjs.img
 
 ### Why we need sync of db ?
-<Note - Wherever we create a new model we have to do db:sync>
+>Note - Wherever we create a new model we have to do db:sync
+
+## -----------------------------------------------------------------------------------------------------------------------
+
+### Creating Airplane model 
+
+Steps -
+* create model with command - `npx sequelize model:generate --name Airplane --attributes modelNumber:String,capacity:integer`
+* making changes in aiplane model 
+    ```javascript
+    Airplane.init({
+    modelNumber:{
+      type : DataTypes.STRING,
+      allowNull : false
+    },
+    capacity:{
+      type : DataTypes.INTEGER,
+      allowNull : false,
+      defaultValue : 200 
+    },
+  }
+  ```
+* Same chnages making in `airport Migration`
+* Now, migrate these changes in our `Mysql` using commmand 
+        ` npx sequelize db:migrate`
+* Creating seed file
+    `npx sequelize seed:generate`
+*Adding some details, in seed file
+
+    ```javascript
+    await queryInterface.bulkInsert('Airplanes', [{
+      modelNumber : 'Boeing 747',
+      capacity    : 320,
+      createdAt : new Date(),
+      updatedAT : new Date()
+    }
+    ```
+* Adding seeding file to db
