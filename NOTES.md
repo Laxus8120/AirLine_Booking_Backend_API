@@ -311,7 +311,7 @@ Steps -
     },
   }
   ```
-* Same chnages making in `airport Migration`
+* Same changes making in `airport Migration`
 * Now, migrate these changes in our `Mysql` using commmand 
         ` npx sequelize db:migrate`
 * Creating seed file
@@ -327,3 +327,16 @@ Steps -
     }
     ```
 * Adding seeding file to db
+        ` npx sequelize db:seed:all`
+* Now, these changes are shown in your DB table.
+
+## --------------------------------------------------------------------------------------------------------------------------
+
+### Let's Create Flights Model
+
+Steps
+* Create Model using -  
+        ` npx sequelize model:generate --name Flights, --attributes flightNumber:String,airplaneId:Integer,departureAirportId:Integer,arrivalAirportId:Integer,arrivalTime:Date,departureTime:Date,price:Integer,boardingGate:String,totalSeats:Integer`
+* Adding Constarints in `flight Model file` and `Migration file`.
+* to make these changes in db table level we need to use command .
+        `npx sequelize db:migrate`
