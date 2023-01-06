@@ -340,3 +340,26 @@ Steps
 * Adding Constarints in `flight Model file` and `Migration file`.
 * to make these changes in db table level we need to use command .
         `npx sequelize db:migrate`
+* The table is created in our Mysql in db level.
+
+>NOW, we are doing `MVC files` of flight.
+>Repository Layer is has a fucntion to create flight etc.
+>Service Layer is going to also have function to create and this fucntion is going to have some  `data` field which it gets from controller.
+> Lets's talk about what the controller going to send in `data` =>
+        /**
+        *{
+        *  flightNumber,
+        * airplaneid,
+        *    departureAirportId,
+        *    arrivalAirportId,
+        *    arrivalTime,
+        *    departureTime,
+        *    price,
+        *    totalSeats   -->  this field is taken from airplane Repository                
+        *}
+        */
+> here we create a object of airplaneRepository class also .
+    ```javascript
+        const airplaneRepository = new AirplaneRepository()
+        const airplane = airplaneRepository.getAirplane(data.airplaneId)
+    ```
