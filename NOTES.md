@@ -376,4 +376,16 @@ Steps
 
 ### Adding filter 
 
-// Object.AssignExample.img 
+// Object.AssignExample.img
+
+### --------------------------------------------------------------------------------------------------------------------------
+
+### implementing CRUD repository
+
+>In our file we have so many models which are generally doing simple action like creating, updating and deleting stuff.
+>so CRUD action are common on all these files so we are going to make a singel file which do all this stuff and we dont have any repeattive stuff.
+
+* Creating crudRpository file which will have all the crud basic function.
+* in crudRpository file we pass the models we have and perform operation.
+* let's similarly create a serviceRepository file which do similar task.
+
