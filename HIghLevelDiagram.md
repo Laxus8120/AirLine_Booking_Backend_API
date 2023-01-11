@@ -59,5 +59,5 @@ Now, what happen is your req from  the load balancer is routed to the API gatewa
 
 #### WHAT are process QUeue ?
 
-Lets say ther is a service that is intaiating 30 query per sec other service which just consume only 5 query per sec, the service cannot handle 30 query in one go so we have something in middle which handle this bombbard we ` process queue ` . 
+Lets say ther is a service that is intaiating 30 query per sec other service which just consume only 5 query per sec, the service cannot handle 30 query in one go so we have something in middle which handle this bombbard we ` process queue `. 
 

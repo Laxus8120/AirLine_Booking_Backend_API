@@ -389,3 +389,62 @@ Steps
 * in crudRpository file we pass the models we have and perform operation.
 * let's similarly create a serviceRepository file which do similar task.
 
+### STEP - 1 - Setting up first middleware 
+
+* the flight-middleware check whether the data coming from client is correct or not.
+>NOTE -  A middleware is a fucntion which has the access of `req` object ,`res` object ,`next()` middleware. 
+
+### STEP - 2 - ADDING CHECKING OBJECT IN CONTROLLER
+
+* In our controller folder we know that the middleware check that all the field are available by client but if client send more data then needed then we can check in controller layer too.
+
+*   ```javascript
+    try {
+            const flightRequestData= {
+                flightNumber : req.body.flightNumber,
+                airplaneId : req.body.airplaneId,
+                departureAirportId : req.body.departureAirportId,
+                arrivalAirportId : req.body.arrivalAirportId,
+                arrivalTIme : req.body.arrivalTIme,
+                departureTime : req.body.departureTime,
+                price : req.body.price
+            }
+            const flight = await flightService.createFlight(flightRequestData);
+    ```          
+* using this `flightRequestData` object we only take the data from req.body what we needed for createflight().
+
+### ------------------------------------------------------------------------------------------------------------------------------
+
+## SETTING UP AUTH SERVICE (AUTH = AUTHORISATION + AUTHENTICATION)
+
+>NOTE - **Authentication verifies the identity of a user or service, and authorization determines their access rights.**
+
+### HOW TO DO AUTHENTICATION ?
+
+* A moblie no. - authentication because one moblie no. has only one user.
+* Omni Auth - it means you have third party service for e.x - gitHub/facbook/Gmail and these service did authentication for you.
+* TOken based Authentication - we are going to build this in our project.
+
+### in TOKEN BASED AUTHENTICATION 
+
+* In token absed authentication we generally hear this word often - ( JWT ?)
+* // tokenauthentication.img
+
+* Now, the server dont stored the token on server side then whenver the client send the req with his token, how server know the  user is authenticated ? 
+* And for this purpose we use somthing called JWT .
+> JWT stand for - ***JSON WEB TOKEN(JWT)***
+* To generate the JWT token ,we acutally use the  client credentials.
+* // JWT token.img
+
+* we know the the server not gonna save any token.
+* so what we do is every time the client send the token with req we try to dycrypt it with some algo and from that if we able to get the user and we can identify it because every token identify the unique user.
+* We never used the password to generate the token.
+* we use user name and user id.
+* we never make the token alive for ever. there will be expire time to the token.
+* e.g we get automatically get log/out from website and we have to login again.
+
+> SO, using this JWT token only we stored the data about the user and then using that data we actually identify which user is making a request and wether this is a valid req because we only generate this token once the user give the correct `id` and   `password` and if user dont give this id and password the user cannot get the token thats the main line of security and we have a expiry allocated.
+> Even if the token is missplaced by the user what will happen is we are going to expire it after sometime. so there is no need of storing this information in backend.
+> That's why JWT token become very powerfull, that thye contain the information about the user id or unique user information in themselves .
+> there is no need of storing password because the multiple user have same password .
+> This is widely used authentication serive in the industry.
