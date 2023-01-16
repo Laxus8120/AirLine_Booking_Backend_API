@@ -1,5 +1,7 @@
 const UserRepository = require('../repository/UsersRepository');
 
+const bcrypt = require('bcrypt');
+
 const {JWT_KEY}  = require('../config/serverConfig');
 const jwt = require('jsonwebtoken');
 class UserService {
@@ -38,6 +40,16 @@ class UserService {
 
         } catch (error) {
             console.log("Something went wrong in token validation", error);
+            throw error;
+        }
+    }
+
+    checkPassword(userInputPlainPassword,encryptedPassword){
+        try {
+            return bcrypt.compareSync(userInputPlainPassword,encryptedPassword);
+
+        } catch (error) {
+            console.log("Something went wrong in password comparission");
             throw error;
         }
     }
