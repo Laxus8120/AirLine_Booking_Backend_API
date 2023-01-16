@@ -5,7 +5,10 @@ const bodyParser = require('body-parser');
 
 const {PORT}  = require('./config/serverConfig');
 
+const UserRepository = require('./repository/UsersRepository');
+
 const apiRouter = require('./Routes/index')
+const userRepository = new UserRepository();
 
 const prepareAndStartServer = ()=>{
 
@@ -15,8 +18,12 @@ const prepareAndStartServer = ()=>{
 
     app.use('/api', apiRouter);
 
-    app.listen(PORT,() => {
+    app.listen(PORT, async () => {
         console.log(`Server Started at PORT no : ${PORT}`);
+
+
+        const responce = await userRepository.getById(4);
+        console.log(responce);
     })
 
 }
