@@ -39,7 +39,24 @@ class UserRepository {
     
         } catch (error) {
             
-            console.log("Something went wrong in rep layer of destroy function");
+            console.log("Something went wrong in rep layer of getByEmail repo function");
+            throw error;
+        }        
+    }
+
+    async getByEmail(userEmail){
+        
+        try {
+            const result = await User.findOne({
+                where : {
+                    Email : userEmail
+                }
+            });
+            return result;
+    
+        } catch (error) {
+            
+            console.log("Something went wrong in rep layer of getByEmail rep function");
             throw error;
         }        
     }
