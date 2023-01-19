@@ -5,8 +5,12 @@ const bodyParser = require('body-parser');
 
 const {PORT}  = require('./config/serverConfig');
 
-const UserService = require('./services/User-Service')
-const apiRouter = require('./Routes/index')
+const db= require('./models/index');
+
+
+const apiRouter = require('./Routes/index');
+
+
 
 const prepareAndStartServer = ()=>{
 
@@ -18,9 +22,11 @@ const prepareAndStartServer = ()=>{
 
     app.listen(PORT, async () => {
         console.log(`Server Started at PORT no : ${PORT}`);
+        if(process.env.DB_SYNC){
+            db.sequelize.sync({alter: true})
+        }
 
-        const userService = new UserService();
-
+        
         // const token = userService.createToken({email: 'hemantrawat812@gmaill.com' , id:'1'});
         // console.log(token);
         // const newToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbWFudHJhd2F0ODEyQGdtYWlsbC5jb20iLCJpZCI6IjEiLCJpYXQiOjE2NzM4NTAxNDQsImV4cCI6MTY3MzkzNjU0NH0.sYkG0v2ZBsxwKEegwTIP_kCqXQ9Aj5q0bkKWCYtR2g8'
