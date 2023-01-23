@@ -21,6 +21,7 @@ class UserService {
                 throw error;
             }
             console.log("something went wrong in service layer of create");
+            console.log(error)
             throw error; //new AppErrors(
             //     'ServerError',
             //     'Something went wrong in service ',
@@ -47,7 +48,10 @@ class UserService {
             return newJWT;
             
         } catch (error) {
-            console.log("Something went wrong in signIn repo function;");
+            console.log("Something went wrong in signIn process");
+            if(error.name  == 'AttributeNotFound'){
+                throw error;
+            }
             throw error;
         }
     }

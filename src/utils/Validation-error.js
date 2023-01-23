@@ -1,4 +1,4 @@
-const { StatusCodes } = require('http-status-code');
+const { StatusCodes } = require('http-status-codes');
 const AppError = require('./error_handles');
 
 class ValidationError extends AppError {
