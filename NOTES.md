@@ -448,3 +448,202 @@ Steps
 > That's why JWT token become very powerfull, that thye contain the information about the user id or unique user information in themselves .
 > there is no need of storing password because the multiple user have same password .
 > This is widely used authentication serive in the industry.
+
+## CREATING AUTH - SERVICE FOLDER
+* just creating a basic MVC Folders.
+* intalling some packages like express, bodyparser, dotenv.
+* creating `.env` file our enviroment variable.
+* creatin more MVC folders
+* setting up sequelize
+* setting up sequelize 
+    - first we install mysql2
+    - then sequelize and sequlize-cli
+* Now, we do `npx sequelize init`
+    - It creates new folders like config, models, migration,seeders.
+    - just copy the folders inside the src folder and we already created a config folder just copy the cofig.json file into you src/config folder.
+* NOw, write the the credentials in config.json. like  `db name` and `password` etc.
+> NOW in order to create a database in mysql level, write command 
+
+            ` npx sequelize db:create`  (note - madke sure your in directory where you have config folder. for here e.g is src fodler)
+
+> For an Authentication service if take a brief look, the only model we need is `user` model only.
+
+### Lets create user model
+
+* first chage the directory and go in the `src folder` where you have your `config`.
+* Then run the command 
+        ` npx sequelize model:generate --name User --attributes Email:String,Password:String`
+
+* now you have a new model name user and a new migration.
+* Now, add some constraints in our model.
+* Now, let's add some `validation` to check whether a person is send a correct email or not .
+    ```javascript
+    validate{
+        isEmail : true
+    }
+    ```
+* In order to see tables in mysql DB level lets migrate our model.
+    `npx sequelize db:migrate`
+* Now, we have our user table.
+
+### LETS START SIGN/IN AND LOG/IN 
+
+* The first Thing we need to do is 
+
+    **SIGN/IN** - IT is going to be first Time registration
+    **LOG/IN**  - It only chect the authentication whether the user is present in our DB or not.
+
+* START CREATING MVC files for user.
+
+### LETS CRYPT THE PASSWORD 
+
+* there is a package called as `bcrypt`
+* It is the password hashing fucntion.
+>NOTE - WE are trying to our crypt our password, but this is not our problem - 
+>NOTE - How to incrypt my password is not my problem ?, When to incrypt my password is my problem.
+
+* but where you write this logic in your folders, --> Service folder?--> ans - No, because it look like business logic but it is not, authentication is like a requirement.
+* So, where we write it? 
+    Answer- the answer is - your models --> Now, let me tell you why-->Just think about for one moment, that you dont have this code of this express application, you just have the user table --> Now, if you are storing an entity in your database, then whenever you create a new user, and for every new user i have to encrypt my password right ! --> And database give you a feature which actually do it. --> In data there is something called as triggers! , What are triggers ? --> triggers are event in database,for.ex- delete a row, adding a row etc.
+    --> now, when we want to add a user, at database level at that time we need to encrypt the password of the user.
+    --> so, we are going to write this logic inside our model and we can setup a trigger!.
+    --> how we can setup a triggers? - sequelize give us very powerfull fucntions that can dirrectly help us to trigger he function.
+    --> THERE  are something called hooks, which generally are lifestyle events of your database which access triggers only.
+    ```javascript
+        User.beforeCreate( ()=> {
+ 
+        })
+     ```
+    --> inside this callback function we have access to the `user object` - this user object is the same object that we actually trying to create or going to be created.
+    * the object or row before whose creation is going to execute this fucntion , that object is this user object.
+    * install bcrypt package now `npm i bcrypt`
+    --> Now, bcrypt has two prespective 1- how to encrypt the data.(for.eg - when you are signing up then you need to install the encrypted data.)
+                                        2 - now lets say when user is coming for logIn/signIn then user is not sending you encypted password.
+    --> generally we dont stored the password in db we stored the hash, and all the hashing is done by bcyrpt so all we need to do is install bcrypt.
+    --> there is something called `hashsync` -- hashsync is a syncronous fucntion.
+
+    * what is salt means? -  added extra data that you actually passed for your ecryption.
+    * added `salt` variable in your config file.
+    * we are generating salt in config file.
+    * require this salt and bcryt in your in userModel
+    ```javascript
+    User.beforeCreate( (user)=> {
+ 
+    const encryptedPassword = bcrypt.hashSync(user.Password,SALT);
+    user.Password = encryptedPassword;
+    })
+    ```
+    * here `user` is just the db object.
+    * and this user is before user creation.
+    --> now you see in your password in db your password is encrypted.
+     
+## Adding Authentication Logic to auth service post registration
+
+ **How to select a particular coloumn in sequelize**
+
+    ` attributes : ['email', 'id']`
+
+### SETTING UP API THROUGH WHICH USER CAN SIGN/IN
+
+* when the user hit the logIn or signIn api they are going to get the new json token generated for them  they are going to get a new json web token for them 
+* In order to generate this token we have to do we are going to use the package called `json web token`
+    -`npm i jsonwebtoken`
+* Let's create function which helps us to create the token and verify it.
+```javascript
+
+        const token = userService.createToken({email: 'hemantrawat812@gmaill.com' , id:'1'});
+        console.log(token);
+        const newToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbWFudHJhd2F0ODEyQGdtYWlsbC5jb20iLCJpZCI6IjEiLCJpYXQiOjE2NzM4NTAxNDQsImV4cCI6MTY3MzkzNjU0NH0.sYkG0v2ZBsxwKEegwTIP_kCqXQ9Aj5q0bkKWCYtR2g8'
+        const response = userService.verifyToken(newToken);
+        console.log(response);
+```
+
+*** Let's work on middleware ***
+
+### How this authenticaiton service is going to work ?
+
+* So, is you want to use a service and you want to check the user is authenticated, it means they need to send the JWT token.
+--> So there is concept of `bearer token`--> it is just a normal authentication, what we do is we send this JWT token inside the `Header` 
+> NOTE - lets say you want to access a `resourse` then we want to make some get,post,patch etc req. Then were we will send this token should we send in url, body ? --> So, technically we need to send this in our `Header`.
+
+* to use other services the user has to be authenticated.
+* now, we need to setup an api whether a user is authenticated or not and then we can use in our other services.
+* So, let's setup an api.
+--> setup a route.
+--> after route we check whether the user is authenticated by cheching the both tokens.
+    `const token = req.headers['x-access-token'];`
+--> setting up new fucntion in service layer.
+--> ` async isAuthenticated(token) `
+--> now checking both token and verifying that the user is valid or not.
+
+
+### BUILDING AUTHORISATION
+
+* Authorisation is just role given to user.
+* SO, users have particular role so in order to that we are going to create a new models. which define the roles of a user.
+* `npx sequelize model:generate --name Roles --attributes  name:String`
+* Now, after we create a model now, we know that a one user can have multiple roles so it is going to have `many to many association` 
+> NOTE - When we have one to many association then we store the Id of one table to other, but in many to many association we need third table. which can helps us and this third table act as a `through table`.
+* In this through table waht will happen is  there will be userId and a roleId is associated
+```javascript
+this.belongsToMany(models.Users,{
+        through : 'Users_Roles'
+      })
+```       
+> NOTE - This through table is generally a table in db which automatically generated by the sequelize we can also create this model seperately.
+* Now, lets migrate these changes .
+    ` npx sequelize db:migrate`
+* but the through table is not seen after the migrate, i order to see the table we have to `sync our database also`.
+```javascript
+if(process.env.DB_SYNC){
+            db.sequelize.sync({alter: true})
+        }
+```
+* now in our user_role table we have no data available, let's create a seed file for this because this table not gonna have so many data.
+* ` npx sequelize seed:generate --name add_roles`
+* Adding seeder data 
+```javascript
+{
+      name: 'ADMIN',
+      createdAt : new Date(),
+      upadatedAt : new Date()
+    },
+    {
+      name: 'CUSTOMER',
+      createdAt : new Date(),
+      upadatedAt : new Date()
+    },
+    {
+      name: 'AIRLINE_BUSINESS',
+      createdAt : new Date(),
+      upadatedAt : new Date()
+    }
+```
+* Now lets make these changes reflect in db level by making seeder migration.
+    ` npx sequelize db:seed 20230119073702-add_roles.js`
+* now we have our roles in our roles table. now we need to assign these roels to our users.
+* ```javascript
+    const u1 = await User.findByPk(5);
+        const r1 = await Roles.findByPk(2); 
+        u1.addRole(r1);
+  ```
+* Now we added roles in our user_roles.
+* creating function to check a user have a admin role or not .
+* In service layer creating `isAdmin` fucntion.
+* Creating API for checking admin
+
+>Note - whenever we do `db.sequelize.sync` it will not created automatic files for you.(like model file or migration file).
+
+> NOw, in the whole project we build a lot of things, and the erroe can be happe in multiple places e.g diff mircoservices or the fucntion we trying to access right ! .
+> So, we need to handle the error gracefully as well as we have to handel the erroe codes.
+* Installing a package which gives us the error codes 
+        `npm i http-status-code`
+* Creating new file for handling the error codes.
+* ```javascript
+  class AppErrors extends Error{
+    constructor(name, message, explanation, statusCode){
+        
+    }
+  }
+  ```
+* the Error class is inbuild class provided to us .
