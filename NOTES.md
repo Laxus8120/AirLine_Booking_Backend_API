@@ -647,3 +647,123 @@ if(process.env.DB_SYNC){
   }
   ```
 * the Error class is inbuild class provided to us .
+### ------------------------------------------------------------------------------------------------------------
+
+# CREATING BOOKING SERVICE
+
+* Installing packages
+```json
+"dependencies": {
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-status-codes": "^2.2.0",
+    "morgan": "^1.10.0", // it help us to log with  request 
+    "mysql2": "^3.0.1",
+    "nodemon": "^2.0.20",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2"
+  }
+```
+* Creating source folder `src` and implementing our server means `index.js` or we can say our express server.
+```javascript
+const setupAndStartServer = () =>{
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
+
+    app.listen(PORT,() => {
+
+        console.log(`Server Started on ${PORT}`);
+    })
+}
+setupAndStartServer();
+```
+* setting up sequelize `npx sequelize init`
+* setting up our db name and password and then create database in mysql using `npx sequelize db:create`(`cd` to src folder first where your config reside).
+* setting up routes.
+* Setting utils error folder 
+* creating service error file which generally INTERNAL SERVER ERROR.
+* creating validation error file.
+* creating app error file.
+
+### Creating booking model
+
+* booking is done by the user, so we need a user Id , one booking belong to user , one booking is belong to filght also so it also has a flight Id, booking will also have some status, every booking has a unique Id.
+* Creating model `npx sequelize model:generate --name Booking --attributes flightId:integer,userId:Integer,status:enum`
+* our status has three value for booking - 1. In process
+2. cancelled 
+3. Booked
+* setting validation in booking model.
+* Now, migrate this model in DB - `npx sequelize db:migrate`
+
+* setting up booking rep and booking service folder.
+* 
+
+### setting up new migration 
+
+* generally we need to do model:generate to create a migration , but if you want to create a new migration we can also use 
+` npx sequelize migration:create  --name modify_booking_add_new_fields`
+* Now, a new migration file is created there we can use queryInterface to add details.
+* One thing we need to keep in mind is using this migration we need change the model file manually.
+* One thing you can do is 
+
+```javascript
+await queryInterface.addColumn(
+      'Bookings',
+      'noOfSeats',
+      {
+        type : Sequelize.INTEGER,
+        allowNull : false,
+        defaultValue : 1
+      }
+    );
+    await queryInterface.addColumn(
+      'Bookings',
+      'totalCost',
+      {
+        type : Sequelize.INTEGER,
+        allowNull : false,
+        defaultValue : 0
+      }
+    );
+```
+* We also gonna setup the `asynx down` function if we say we remove the migration those changes we meed also get removed;
+```javascript
+await queryInterface.removeColumn('Bookings', 'noOfSeats');
+await queryInterface.removeColumn('Bookings', 'totalCost');
+```
+* Now, our migration file ready now just do make this migration run `npx sequelize db:migrate`
+* Lets sync this changes in our models.
+* Now we have new coloumn in our booking table.
+
+## Writing the Logic of booking now,
+
+* now, for booking the price of every flight is different and changes so we need to get the price from the other microservice we created  ` FlightAndSearch`.
+* The two microservices communicate with each other using `HTTP`.
+
+* So, we have a function in our `flightAndSerachService` which gives us the details of a particular flight.
+* So, now we are going to get the same details from `flightAndSerachService` in our `booking service` 
+
+* Creating a new service file named `BookingService ` in service folder.
+*   ```javascript
+    async createBooking(data){
+        try {
+            const flight  = data.flightId;
+            let getFlightRequestUrl  = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;
+            const flight  = await axios.get()
+        } catch (error) {
+            
+        }
+    }
+    ```
+* In this createBooking funtion the data consist of the flightId and UserId.
+* the data.flightId  gonna fetch a flight from flightService and fetch the data from there .
+
+### How can we make a http call to our flightAnd search Service.?
+
+* So, there is a package `axios` which easily helps to make http req.
+*  And now , the `axios.get()`, now we have to make the url where we make our get req.
+* setting up `FLIGHT_SERVICE_PATH  = 'localhost:3000'`  in our .env  file.
+* creating a url like `let getFlightRequestUrl  = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;`
+

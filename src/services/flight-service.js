@@ -32,6 +32,28 @@ class FlightService{
         }
     }
 
+    async getFlight(flightId) {
+        
+        try {
+            const flight = await this.flightsRepository.getFlight(flightId);
+            return flight;
+        } catch (error) {
+            console.log("Somthing went wrong in  getting the flight with this Id");
+           throw{error}; 
+        }
+    }
+
+    async updateFlight(flightId,data){
+
+        try {
+            const response = await this.flightsRepository.updateFlight(flightId,data);
+            return response;
+        } catch (error) {
+            console.log("Somthing went wrong in  updating the flight with this Id");
+           throw{error}; 
+        }
+    }
+
 }
 
     /**

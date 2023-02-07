@@ -52,7 +52,52 @@ const getAllFlight = async (req,res) => {
         })  
     }
 }
+
+const getFlight  = async (req,res) =>{
+    
+    try {
+        const flight = await flightService.getFlight(req.params.id);
+        return res.status(SuccessCodes.OK).json({
+            data : flight ,
+            success : true,
+            error : {},
+            message : "Successfully fetched the flights"
+        })
+    } catch (error) {
+        console.log(error);   
+        return res.status(500).json({
+            data : {},
+            success : false , 
+            message : "Not able to create a flight ",
+            err : error                      
+        })  
+    }
+}
+
+const updateFlight  = async (req,res) =>{
+
+    try {
+        const flight = await flightService.updateFlight(req.params.id, req.body);
+        return res.status(SuccessCodes.OK).json({
+            data : flight ,
+            success : true,
+            error : {},
+            message : "Successfully update the flights"
+        })
+    } catch (error) {
+        console.log(error);   
+        return res.status(500).json({
+            data : {},
+            success : false , 
+            message : "Not able to update a flight ",
+            err : error                      
+        })  
+    }
+}
+
 module.exports = {
     create,
-    getAllFlight
+    getAllFlight,
+    getFlight,
+    updateFlight
 }
