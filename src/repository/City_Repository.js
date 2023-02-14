@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const {City} = require('../models/index.js');
+const { ValidationError } = require('../utils/error/index.js');
 class CityRepository{
     async createCity({name}){
         try{
@@ -9,7 +10,9 @@ class CityRepository{
             return city;
         }
         catch(error){
-            console.log("Something went wrong in repo layer");
+            if(error.name  == 'SequelizeValidationError'){
+                throw new ValidationError(error);
+            }
             throw{error};
         }
     }

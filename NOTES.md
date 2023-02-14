@@ -335,7 +335,7 @@ Steps -
 ### Let's Create Flights Model
 
 Steps
-* Create Model using -  
+* Ceater Model using -  
         ` npx sequelize model:generate --name Flights, --attributes flightNumber:String,airplaneId:Integer,departureAirportId:Integer,arrivalAirportId:Integer,arrivalTime:Date,departureTime:Date,price:Integer,boardingGate:String,totalSeats:Integer`
 * Adding Constarints in `flight Model file` and `Migration file`.
 * to make these changes in db table level we need to use command .
@@ -760,10 +760,13 @@ await queryInterface.removeColumn('Bookings', 'totalCost');
 * In this createBooking funtion the data consist of the flightId and UserId.
 * the data.flightId  gonna fetch a flight from flightService and fetch the data from there .
 
-### How can we make a http call to our flightAnd search Service.?
+### How can we make a http call to our flightAndsearchService.?
 
 * So, there is a package `axios` which easily helps to make http req.
 *  And now , the `axios.get()`, now we have to make the url where we make our get req.
 * setting up `FLIGHT_SERVICE_PATH  = 'localhost:3000'`  in our .env  file.
 * creating a url like `let getFlightRequestUrl  = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;`
+* we are creaing the funtion like updating the booking and after updating the booking we also need a funciton to update the flight data we have in our flightandSearch service .
+* so, we are creating a updateFlight in flish repo too.
+
 
