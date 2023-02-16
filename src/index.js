@@ -5,6 +5,8 @@ const {PORT}   = require('./config/serverConfig');
 
 const {sendBasicEmail}  = require('./services/email_service');
 
+const cron  = require('node-cron');
+
 const setupAndStartServer  = () =>{
     
     const app = express();
@@ -16,14 +18,17 @@ const setupAndStartServer  = () =>{
 
         console.log(` Server Started on PORT ${PORT}`);
     })
+    
+    cron.schedule('*/2 * * * *', () => {
+        console.log('running a task every two minutes');
+      });
+    // sendBasicEmail(
 
-    sendBasicEmail(
-
-        'laxus@admin.com',
-        'laxusstudy812@gmail.com',
-        'This is testing mail',
-        'Hey, how are you, I hope you like the support'
-    )
+    //     'laxus@admin.com',
+    //     'laxusstudy812@gmail.com',
+    //     'This is testing mail',
+    //     'Hey, how are you, I hope you like the support'
+    // )
 
 }
 
