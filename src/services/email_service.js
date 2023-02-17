@@ -1,4 +1,7 @@
 const sender  = require('../config/emailConfig');
+const NotificationTicketRepository = require('../Repository/NotificationTicket');
+
+const repo  = new NotificationTicketRepository();
 
 const sendBasicEmail  = async (mailFrom, mailTo, mailSubject, mailBody ) =>{
 
@@ -16,7 +19,31 @@ const sendBasicEmail  = async (mailFrom, mailTo, mailSubject, mailBody ) =>{
     }
 }
 
+const fetchPendingEmails  = async (timestamp) => {
+
+    try {
+        const response  = await repo.get({status:"PENDING"});
+        return response;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const createNotification = async (data) =>{
+    try {
+        
+        const response  = await repo.create(data);
+        return response;
+    } catch (error) {
+        console.log("Something went wrong in the service layer");
+        throw(error);
+    }
+}
+
 module.exports  = {
 
-    sendBasicEmail
+    sendBasicEmail,
+    fetchPendingEmails,
+    createNotification
 }
