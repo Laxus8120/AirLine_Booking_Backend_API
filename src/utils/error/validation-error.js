@@ -1,5 +1,3 @@
-const { StatusCodes, METHOD_FAILURE} = require('http-status-codes');
-
 class ValidationError extends Error{
 
     constructor(error){
